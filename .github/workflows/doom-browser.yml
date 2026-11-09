@@ -166,14 +166,14 @@ jobs:
           echo "    🎮 DOOM IS RUNNING! OPEN THE LINK BELOW: 🎮"
           echo "======================================================="
           
-          # יצירת מנהרת HTTP מאובטחת החוצה דרך Pinggy (עם הרווח המתוקן -R 0)
+          # יצירת מנהרת HTTP מאובטחת החוצה דרך Pinggy
           ssh -p 443 -R 0:localhost:6080 -o StrictHostKeyChecking=no a.pinggy.io | tee pinggy.log &
           
           # השהייה לקבלת הקישור
           sleep 8
           
-          # חילוץ כתובת ה-URL הראשונה והוספת פרמטרי חיבור אוטומטי ישירות ל-vnc.html
-          RAW_URL=$(cat pinggy.log | grep -o "https://.*\.pinggy\.link" | head -n 1)
+          # חילוץ כתובת ה-URL המלאה הראשונה מתוך הלוגים
+          RAW_URL=$(cat pinggy.log | grep -o "https://[a-zA-Z0-9.-]*\.pinggy\.(link|net)" | head -n 1)
           CLEAN_URL="${RAW_URL}/vnc.html?autoconnect=true&resize=scale"
           
           echo ""
