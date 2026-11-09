@@ -160,31 +160,11 @@ jobs:
           /usr/share/novnc/utils/novnc_proxy --vnc localhost:5900 --listen 6080 &
           sleep 3
 
-            - name: Expose Browser Link & Play DOOM
+      - name: Expose Browser Link & Play DOOM
         run: |
           echo "======================================================="
           echo "    🎮 DOOM IS RUNNING! OPEN THE LINK BELOW: 🎮"
           echo "======================================================="
           
           # יצירת מנהרת HTTP מאובטחת החוצה דרך Pinggy
-          ssh -p 443 -R0:localhost:6080 -o StrictHostKeyChecking=no a.pinggy.io | tee pinggy.log &
-          
-          # השהייה לקבלת הקישור
-          sleep 8
-          
-          # חילוץ כתובת ה-URL הראשונה והוספת פרמטרי חיבור אוטומטי ישירות ל-vnc.html
-          RAW_URL=$(cat pinggy.log | grep -o "https://.*\.pinggy\.link" | head -n 1)
-          CLEAN_URL="${RAW_URL}/vnc.html?autoconnect=true&resize=scale"
-          
-          echo ""
-          echo "👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇"
-          echo "👉  $CLEAN_URL  👈"
-          echo "👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆"
-          echo ""
-          
-          echo "======================================================="
-          echo "The game session will stay alive for up to 1 hour."
-          echo "======================================================="
-          
-          # שמירה על הרץ פעיל לצורך המשחק
-          sleep 3600
+          ssh -p
